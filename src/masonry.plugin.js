@@ -1,5 +1,6 @@
  import Vue from 'vue'
- import Masonry from 'masonry-layout';
+ import Masonry from 'masonry-layout'
+ import imagesLoaded from 'imagesloaded'
 
  const attributesMap = {
    'column-width': 'columnWidth',
@@ -54,9 +55,13 @@
  export const masonryTile = Vue.directive('masonryTile', {
 
    inserted: function (el) {
-     Events.$emit(EVENT_ADD, { 'element': el })
+     imagesLoaded(el, () => {
+       Events.$emit(EVENT_ADD, { 'element': el })
+     })
    },
    beforeDestroy: function (el) {
-     Events.$emit(EVENT_REMOVE, { 'element': el })
+     imagesLoaded(el, () => {
+       Events.$emit(EVENT_REMOVE, { 'element': el })
+     })
    }
  })
